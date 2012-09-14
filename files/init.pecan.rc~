@@ -1,3 +1,21 @@
+on early-init
+
+    mkdir /system
+    mkdir /data 0771 system system
+    mkdir /cache 0771 system cache
+    mkdir /mnt/sdcard 0000 system system
+    mkdir /sd-ext 0771 system system
+
+on init
+
+    # setup the global environment
+    export EXTERNAL_STORAGE /mnt/sdcard
+    export SD_EXT_DIRECTORY /sd-ext
+    export DOWNLOAD_CACHE /cache/download
+
+    # Backwards Compat - XXX: Going away in G*
+    symlink /mnt/sdcard /sdcard
+
 on boot-pause
     exec sbin/chargerlogo
 
@@ -8,12 +26,6 @@ on boot
     mkdir /data/radio 0770 radio radio
 
 ## LGE's bluetooth stuff
-
-# mount mtd partitions
-mount vfat /dev/block/mmcblk1p1 /sdcard
-chown system system /sdcard
-chmod 0777 /sdcard
-setprop EXTERNAL_STORAGE_STATE mounted
 
 # bluetooth permissions
     chmod 0660 /dev/ttyHS0

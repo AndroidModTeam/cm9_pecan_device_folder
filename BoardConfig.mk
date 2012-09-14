@@ -11,6 +11,8 @@ TARGET_CPU_ABI := armeabi-v6l
 TARGET_CPU_ABI2 := armeabi
 TARGET_BOOTLOADER_BOARD_NAME := pecan
 
+TARGET_USES_GENLOCK := true
+
 # Kernel
 TARGET_KERNEL_SOURCE := kernel/lge/msm7x27
 TARGET_KERNEL_CONFIG := cyanogenmod_pecan_defconfig
@@ -66,7 +68,7 @@ BOARD_HAVE_BLUETOOTH_BCM := true
 
 # QCOM
 BOARD_USES_QCOM_LIBS := true
-BOARD_USES_LEGACY_QCOM := true
+BOARD_USES_QCOM_AUDIO_SPEECH := true
 BOARD_USES_QCOM_LIBRPC := true
 
 # KERNEL

@@ -15,6 +15,7 @@ PRODUCT_PACKAGE_OVERLAYS += vendor/cm/overlay/ldpi
 
 # Graphics 
 PRODUCT_PACKAGES += \
+   libgenlock \
    libmemalloc \
    libQcomUI \
    libgralloc \
@@ -22,6 +23,8 @@ PRODUCT_PACKAGES += \
 
 # Audio
 PRODUCT_PACKAGES += \
+    audio_policy.pecan \
+    audio.primary.pecan \
     audio.a2dp.default
 
 # Zram
@@ -88,8 +91,6 @@ PRODUCT_COPY_FILES += \
 
 # Audio
 PRODUCT_COPY_FILES += \
-    device/lge/pecan/prebuilt/lib/hw/audio.primary.msm7625.so:system/lib/hw/audio.primary.msm7625.so \
-    device/lge/pecan/prebuilt/lib/hw/audio_policy.msm7625.so:system/lib/hw/audio_policy.msm7625.so \
     vendor/lge/pecan/proprietary/lib/libaudioeq.so:system/lib/libaudioeq.so
 
 # pecan configs touchscreen

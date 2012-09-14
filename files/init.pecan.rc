@@ -1,11 +1,136 @@
+## hopemini@lge.com, 20100416
+
+import init.qcom.usb.rc
+
+on early-init
+
+    mkdir /system
+    mkdir /data 0771 system system
+    mkdir /cache 0771 system cache
+    mkdir /mnt/sdcard 0000 system system
+    mkdir /sd-ext 0771 system system
+
+on init
+
+    # setup the global environment
+    export EXTERNAL_STORAGE /mnt/sdcard
+    export SD_EXT_DIRECTORY /sd-ext
+    export DOWNLOAD_CACHE /cache/download
+
+    # Backwards Compat - XXX: Going away in G*
+    symlink /mnt/sdcard /sdcard
+
+    # Add permissions for camera access
+    chmod 0666 /dev/msm_camera/config0
+    chmod 0666 /dev/msm_camera/control0
+    chmod 0666 /dev/msm_camera/frame0
+    chmod 0666 /dev/msm_camera/pic0
+
+    # Define the memory thresholds at which the above process classes will
+    # be killed.  These numbers are in pages (4k).
+    setprop ro.FOREGROUND_APP_MEM 1536
+    setprop ro.VISIBLE_APP_MEM 2048
+    setprop ro.SECONDARY_SERVER_MEM 4096
+    setprop ro.BACKUP_APP_MEM 4096
+    setprop ro.HOME_APP_MEM 4096
+    setprop ro.HIDDEN_APP_MEM 5120
+    setprop ro.CONTENT_PROVIDER_MEM 5632
+    setprop ro.EMPTY_APP_MEM 6144
+
+# Import Froyo LMK settings due to its less aggressive nature
+    write /sys/module/lowmemorykiller/parameters/minfree 1536,2048,4096,5120,5632,6144
+
+# Enable low memory killer to check file pages
+    write /sys/module/lowmemorykiller/parameters/minfile 0,0,0,5120,5632,6144
+    write /sys/module/lowmemorykiller/parameters/check_filepages 1
+
+# fix for enropy service and some other that failed
+    chmod 0755 /data/system/appwidgets.xml
+    chmod 0755 /data/system/entropy.dat
+    chmod 0755 /data/system/wallpaper_info.xml
+
+on fs
+
+    # framebuffer permission for copybit
+    chmod 0666 /dev/graphics/fb0
+
+on post-fs
+
+    # nv
+    mkdir /data/nv
+    chown system system /data/nv
+    chmod 0711 /data/nv
+
+    mkdir /data/local/download 0771 system cache
+    mkdir /cache/download 0771 system cach
+
+    # wifi
+    chmod 0777 /data/misc/wifi/config_mac
+    mkdir /data/audioprop 0777 system system
+    mkdir /data/misc/wifi/sockets 0770 wifi wifi
+    setprop wifi.supplicant_scan_interval 20
+    setprop wifi.interface wlan0
+    mkdir /data/misc/dhcp 0777 system system
+
+on post-fs-data
+
+    # wifi
+    mkdir /data/misc/wifi 0770 wifi wifi
+    mkdir /data/misc/wifi/sockets 0770 wifi wifi
+    mkdir /data/misc/dhcp 0770 dhcp dhcp
+    chown dhcp dhcp /data/misc/dhcp
+    mkdir /data/misc/hotspot 0770 system hotspot
+
+    # last line for post-fs-data
+    setprop vold.post_fs_data_done 1
+
 on boot-pause
+
     exec sbin/chargerlogo
 
+on early-boot
+
+    # set RLIMIT_MEMLOCK to 64MB
+    setrlimit 8 67108864 67108864
+
 on boot
+
     mkdir /data/amit 0777 ami304d ami304d
     chmod 0666 /data/amit/AMI306_Config.ini
+    chmod 0666 /data/amit/AMI306_Config2.ini
 
     mkdir /data/radio 0770 radio radio
+    chmod 2770 /data/radio
+
+    # liblights
+    chown system system /sys/class/leds/button-backlight/brightness
+    chown system system /sys/class/leds/lcd-backlight/brightness
+
+    chown bluetooth bluetooth /sys/module/bluetooth_power/parameters/power
+    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/type
+    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/state
+    chown bluetooth bluetooth /proc/bluetooth/sleep/proto
+    chown system system /sys/module/sco/parameters/disable_esco
+    chmod 0660 /sys/module/bluetooth_power/parameters/power
+    chmod 0660 /sys/class/rfkill/rfkill0/state
+    chmod 0660 /proc/bluetooth/sleep/proto
+    chown bluetooth bluetooth /dev/ttyHS0
+    chmod 0660 /dev/ttyHS0
+    chmod 0666 /dev/msm_snd
+
+    # allow interfaces to get IPv6 address when tethering is enabled
+    write /proc/sys/net/ipv6/conf/rmnet0/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet1/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet2/accept_ra 2
+
+    # wifi
+    mkdir /data/misc 01771 system misc
+    mkdir /data/misc/wifi 0770 system wifi
+    mkdir /data/misc/wifi/sockets
+    chmod 770 /data/misc/wifi/sockets
+    mkdir /data/misc/dhcp 0770 dhcp dhcp
+    chown dhcp dhcp /data/misc/dhcp
+    mkdir /data/system 0775 system system
 
 ## LGE's bluetooth stuff
 

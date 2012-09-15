@@ -23,7 +23,7 @@
 #include <system/audio.h>
 #include <hardware/audio.h>
 
-//#include "AudioHardware.h"
+#include "AudioHardware.h"
 #include <hardware_legacy/AudioHardwareInterface.h>
 #include <hardware_legacy/AudioSystemLegacy.h>
 
@@ -319,6 +319,7 @@ static uint32_t adev_get_supported_devices(const struct audio_hw_device *dev)
             AUDIO_DEVICE_OUT_AUX_DIGITAL |
             AUDIO_DEVICE_OUT_ANLG_DOCK_HEADSET |
             AUDIO_DEVICE_OUT_DGTL_DOCK_HEADSET |
+            AUDIO_DEVICE_OUT_SPEAKER_IN_CALL | // p350 SPEAKER_IN_CALL fix
             AUDIO_DEVICE_OUT_ALL_SCO |
 #ifdef HAVE_FM_RADIO
             AUDIO_DEVICE_OUT_FM |

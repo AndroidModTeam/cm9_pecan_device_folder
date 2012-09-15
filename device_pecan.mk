@@ -17,6 +17,7 @@ PRODUCT_PACKAGE_OVERLAYS += vendor/cm/overlay/ldpi
 PRODUCT_PACKAGES += \
    libgenlock \
    libmemalloc \
+   libhwcomposer \
    libQcomUI \
    libgralloc \
    libcopybit
@@ -49,7 +50,7 @@ PRODUCT_PACKAGES += \
 # Other
 PRODUCT_PACKAGES += \
     librs_jni \
-    libcamera \
+#    libcamera \
     gadget_id \
     bash \
     dexpreopt 

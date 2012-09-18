@@ -17,9 +17,11 @@ PRODUCT_PACKAGE_OVERLAYS += vendor/cm/overlay/ldpi
 PRODUCT_PACKAGES += \
    libgenlock \
    libmemalloc \
-   libhwcomposer \
+   libstagefrighthw \
+   libtilerenderer \
+   hwcomposer.default \
    libQcomUI \
-   libgralloc \
+   gralloc.msm7k \
    libcopybit
 
 # Audio
@@ -41,6 +43,7 @@ PRODUCT_PACKAGES += \
 
 # Apps
 PRODUCT_PACKAGES += \
+    FileManager \
     com.android.future.usb.accessory \
     LiveWallpapers \
     LiveWallpapersPicker \
@@ -49,11 +52,13 @@ PRODUCT_PACKAGES += \
 
 # Other
 PRODUCT_PACKAGES += \
+    brcm_patchram_plus \
     librs_jni \
-#    libcamera \
+    libcamera \
     gadget_id \
     bash \
-    dexpreopt 
+    dexpreopt \
+    lgapversion
 
 PRODUCT_LOCALES := en_GB
 
@@ -82,6 +87,7 @@ PRODUCT_COPY_FILES += \
 # Init
 PRODUCT_COPY_FILES += \
     device/lge/pecan/files/init.pecan.rc:root/init.pecan.rc \
+    device/lge/pecan/files/init.pecan.usb.rc:root/init.pecan.usb.rc \
     device/lge/pecan/files/ueventd.pecan.rc:root/ueventd.pecan.rc \
     device/lge/pecan/files/init.lge.hidden_reset.sh:root/init.lge.hidden_reset.sh
 
@@ -108,7 +114,12 @@ PRODUCT_COPY_FILES += \
    
 # BT startup
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/prebuilt/init.qcom.bt.sh:system/bin/init.qcom.bt.sh
+    $(LOCAL_PATH)/prebuilt/init.qcom.bt.sh:system/bin/init.qcom.bt.sh \
+
+# UsbMassStorage
+# Attempting to fix native usb
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/prebuilt/UsbMassStorageToggle.apk:system/app/UsbMassStorageToggle.apk
 
 
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0

@@ -23,6 +23,11 @@ PRODUCT_RELEASE_NAME := pecan
 $(call inherit-product, device/lge/pecan/device_pecan.mk)
 
 ## Device identifier. This must come after all inclusions
+PRODUCT_BUILD_PROP_OVERRIDES += \
+    PRODUCT_NAME=lge_pecan \
+    BUILD_FINGERPRINT="lge/pecan/pecan:2.3.7/GRI40/19C11F164C:user/release-keys" \
+    PRIVATE_BUILD_DESC="pecan-user 2.3.7 GRI40 19C11F164C release-keys"
+
 PRODUCT_DEVICE := pecan
 PRODUCT_NAME := cm_pecan
 PRODUCT_BRAND := lge

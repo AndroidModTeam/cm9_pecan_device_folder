@@ -5,7 +5,7 @@ USE_CAMERA_STUB := true
 
 TARGET_NO_BOOTLOADER := true
 # Arch related defines
-TARGET_BOARD_PLATFORM := msm7x27
+TARGET_BOARD_PLATFORM := msm7k
 TARGET_ARCH_VARIANT := armv6-vfp
 TARGET_CPU_ABI := armeabi-v6l
 TARGET_CPU_ABI2 := armeabi
@@ -34,6 +34,7 @@ TARGET_WEBKIT_USE_MORE_MEMORY := true
 
 # Audio
 TARGET_PROVIDES_LIBAUDIO := true
+BOARD_USES_AUDIO_LEGACY := true
 BOARD_USES_QCOM_AUDIO_SPEECH := true
 
 # RIL
@@ -42,13 +43,17 @@ BOARD_PROVIDES_LIBRIL := true
 # Graphics
 BOARD_EGL_CFG := device/lge/pecan/prebuilt/lib/egl/egl.cfg
 TARGET_SPECIFIC_HEADER_PATH := device/lge/pecan/include
+BOARD_USE_ADRENO_200_GPU := true
+
+#Nedeed for LGPECAN sensors 
+COMMON_GLOBAL_CFLAGS += -DUSE_LGE_ALS_DUMMY
 
 # WiFI
 WPA_SUPPLICANT_VERSION := VER_0_6_X
 BOARD_WPA_SUPPLICANT_DRIVER := WEXT
 BOARD_WLAN_DEVICE := bcm4329
 WIFI_DRIVER_MODULE_PATH := "/system/lib/modules/wireless.ko"
-WIFI_DRIVER_MODULE_ARG := "firmware_path=/system/etc/wl/rtecdc.bin nvram_path=/system/etc/wl/nvram.txt"
+WIFI_DRIVER_MODULE_ARG := "firmware_path=/system/etc/wl/rtecdc.bin nvram_path=/system/etc/wl/nvram.txt config_path=/data/misc/wifi/config"
 WIFI_DRIVER_MODULE_NAME := wireless
 WIFI_DRIVER_FW_STA_PATH := "/system/etc/wl/rtecdc.bin"
 WIFI_DRIVER_FW_AP_PATH := "/system/etc/wl/rtecdc-apsta.bin"
@@ -67,8 +72,8 @@ BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_BCM := true
 
 # QCOM
-BOARD_USES_QCOM_LIBS := true
-BOARD_USES_QCOM_LIBRPC := true
+#BOARD_USES_QCOM_LIBS := true
+#BOARD_USES_QCOM_LIBRPC := true
 
 # KERNEL
 BOARD_KERNEL_CMDLINE := mem=215M console=ttyMSM2,115200n8 androidboot.hardware=pecan
